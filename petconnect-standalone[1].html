@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetConnect — Reunite Lost &amp; Found Pets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1D1A2E;
+  --ink-soft: #5B5578;
+  --ink-mute: #9591AD;
+  --bg: #FFFDF9;
+  --surface: #FFFFFF;
+  --surface-sunken: #F6F3FC;
+  --border: #EAE4F7;
+  --border-strong: #D8CEF2;
+
+  --coral: #FF6A4D;
+  --coral-dark: #E24E31;
+  --coral-tint: #FFE7E0;
+  --sun: #FFB627;
+  --sun-tint: #FFF1D2;
+  --sky: #2FA8E0;
+  --sky-tint: #DDF1FC;
+  --grass: #2BB673;
+  --grass-tint: #DEF7EA;
+  --berry: #A855D9;
+  --berry-tint: #F3E3FB;
+  --pink: #FF5DA2;
+  --pink-tint: #FFE3F0;
+
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: 22px;
+  --shadow-sm: 0 2px 6px rgba(29,26,46,0.06);
+  --shadow-md: 0 10px 24px -6px rgba(29,26,46,0.14);
+  --shadow-lg: 0 20px 44px -10px rgba(29,26,46,0.24);
+
+  --font-display: 'Manrope', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+a, button { font-family: inherit; }
+svg { display: block; }
+
+/* ---------- Header ---------- */
+.site-header {
+  background: var(--surface);
+  border-bottom: 2px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+.header-inner { display: flex; align-items: center; justify-content: space-between; height: 70px; }
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand-mark {
+  width: 36px; height: 36px; border-radius: 11px;
+  background: linear-gradient(135deg, var(--coral), var(--pink));
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+}
+.brand-mark svg { width: 20px; height: 20px; fill: currentColor; }
+.brand-name { font-family: var(--font-display); font-size: 20px; font-weight: 800; letter-spacing: -0.01em; }
+
+.main-nav { display: flex; gap: 2px; background: var(--surface-sunken); padding: 4px; border-radius: 999px; }
+.nav-link {
+  background: transparent; border: none; color: var(--ink-soft);
+  padding: 9px 17px; border-radius: 999px; cursor: pointer;
+  font-size: 14px; font-weight: 700;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.nav-link:hover { color: var(--ink); }
+.nav-link.active { color: #fff; background: linear-gradient(135deg, var(--coral), var(--pink)); box-shadow: var(--shadow-sm); }
+
+/* ---------- Hero ---------- */
+.hero { position: relative; overflow: hidden; border-bottom: 2px solid var(--border); }
+.hero-glow {
+  position: absolute; inset: -30% -10% auto -10%; height: 560px;
+  background:
+    radial-gradient(420px 260px at 12% 24%, rgba(255,106,77,0.20), transparent 70%),
+    radial-gradient(380px 240px at 55% 4%, rgba(255,182,39,0.20), transparent 70%),
+    radial-gradient(420px 280px at 88% 22%, rgba(47,168,224,0.18), transparent 70%),
+    radial-gradient(360px 240px at 70% 45%, rgba(168,85,217,0.14), transparent 70%);
+  pointer-events: none;
+}
+.hero-inner { position: relative; padding: 64px 0 48px; display: grid; gap: 36px; }
+.eyebrow {
+  font-family: var(--font-display);
+  text-transform: uppercase; letter-spacing: 0.12em; font-size: 12px; font-weight: 800;
+  color: var(--coral-dark); margin: 0 0 14px;
+}
+h1 {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: clamp(30px, 4vw, 46px); line-height: 1.08;
+  margin: 0 0 16px; letter-spacing: -0.02em; color: var(--ink);
+}
+.hero-sub { max-width: 520px; color: var(--ink-soft); margin: 0 0 26px; font-size: 16.5px; }
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.hero-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; max-width: 640px; }
+.stat {
+  border: 2px solid var(--border); border-radius: var(--radius);
+  padding: 16px 18px; box-shadow: var(--shadow-sm);
+}
+.stat:nth-child(1) { background: var(--coral-tint); border-color: #FFD2C4; }
+.stat:nth-child(2) { background: var(--sky-tint); border-color: #BEE7F8; }
+.stat:nth-child(3) { background: var(--grass-tint); border-color: #BCEBD2; }
+.stat-num { font-family: var(--font-display); font-size: 28px; font-weight: 800; display: block; }
+.stat:nth-child(1) .stat-num { color: var(--coral-dark); }
+.stat:nth-child(2) .stat-num { color: #14719E; }
+.stat:nth-child(3) .stat-num { color: #1B7D50; }
+.stat-label { font-size: 12.5px; font-weight: 700; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.04em; }
+
+/* ---------- Buttons ---------- */
+.primary-btn {
+  background: linear-gradient(135deg, var(--coral), var(--pink)); color: #fff; border: none;
+  padding: 13px 24px; border-radius: var(--radius); font-weight: 800;
+  font-size: 14.5px; cursor: pointer; box-shadow: var(--shadow-sm);
+  transition: transform 0.1s ease, box-shadow 0.15s ease;
+}
+.primary-btn:hover { box-shadow: var(--shadow-md); }
+.primary-btn:active { transform: scale(0.98); }
+
+.ghost-btn {
+  background: var(--surface); color: var(--ink); border: 2px solid var(--border-strong);
+  padding: 11px 20px; border-radius: var(--radius); font-weight: 800; font-size: 14.5px;
+  cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+}
+.ghost-btn svg { width: 16px; height: 16px; color: var(--coral); }
+.ghost-btn:hover { background: var(--surface-sunken); }
+
+.secondary-btn {
+  background: var(--surface); border: 2px solid var(--border-strong); color: var(--ink);
+  padding: 10px 16px; border-radius: var(--radius); cursor: pointer; font-weight: 800; font-size: 13.5px;
+}
+.secondary-btn:hover { background: var(--surface-sunken); }
+
+.link-btn { background: none; border: none; text-decoration: underline; color: var(--coral-dark); cursor: pointer; font-size: inherit; font-weight: 700; padding: 0; }
+
+/* ---------- Views ---------- */
+main { padding: 40px 0 64px; }
+.view h2 { font-family: var(--font-display); font-size: 26px; font-weight: 800; margin: 0 0 4px; letter-spacing: -0.01em; }
+.form-sub { color: var(--ink-soft); margin: 0 0 24px; font-size: 14.5px; }
+
+/* ---------- Filter bar ---------- */
+.filter-bar { display: flex; gap: 10px; margin-bottom: 26px; flex-wrap: wrap; }
+.search-field { position: relative; flex: 1; min-width: 240px; }
+.search-field svg { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); width: 17px; height: 17px; color: var(--ink-mute); }
+.search-field input { padding-left: 38px; }
+.filter-bar input, .filter-bar select {
+  padding: 11px 14px; border: 2px solid var(--border); border-radius: var(--radius);
+  background: var(--surface); font-size: 14px; color: var(--ink);
+}
+.filter-bar input:focus, .filter-bar select:focus,
+input:focus, select:focus, textarea:focus {
+  outline: none; border-color: var(--coral); box-shadow: 0 0 0 3px var(--coral-tint);
+}
+
+/* ---------- Board ---------- */
+.board { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+.pet-card {
+  background: var(--surface); border: 2px solid var(--border); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm); overflow: hidden; cursor: pointer;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+}
+.pet-card:hover { transform: translateY(-4px) rotate(-0.3deg); box-shadow: var(--shadow-lg); border-color: var(--border-strong); }
+
+.card-media { position: relative; }
+.card-photo {
+  width: 100%; height: 160px; object-fit: cover; display: block;
+}
+.card-photo.placeholder {
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 13px; font-weight: 800;
+  color: #fff; text-transform: uppercase; letter-spacing: 0.06em;
+}
+.card-photo.placeholder.species-dog { background: linear-gradient(135deg, var(--sun), #FF9A3C); }
+.card-photo.placeholder.species-cat { background: linear-gradient(135deg, var(--berry), var(--pink)); }
+.card-photo.placeholder.species-bird { background: linear-gradient(135deg, var(--sky), #5FC2E8); }
+.card-photo.placeholder.species-other { background: linear-gradient(135deg, var(--grass), #58D399); }
+
+.tag {
+  display: inline-flex; align-items: center;
+  font-family: var(--font-display); font-size: 11.5px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.05em; color: #fff;
+  padding: 5px 11px; border-radius: 999px;
+}
+.card-media .tag { position: absolute; top: 12px; left: 12px; box-shadow: var(--shadow-sm); }
+.tag.lost { background: var(--coral); }
+.tag.found { background: var(--sky); }
+.tag.reunited { background: var(--grass); }
+
+.species-chip {
+  position: absolute; top: 12px; right: 12px; width: 30px; height: 30px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm);
+  font-size: 15px;
+}
+.species-chip.species-dog { background: var(--sun-tint); }
+.species-chip.species-cat { background: var(--berry-tint); }
+.species-chip.species-bird { background: var(--sky-tint); }
+.species-chip.species-other { background: var(--grass-tint); }
+
+.card-body { padding: 16px; }
+.card-title { font-family: var(--font-display); font-size: 17.5px; font-weight: 800; margin: 0 0 8px; letter-spacing: -0.005em; }
+.card-meta { font-size: 13.5px; color: var(--ink-soft); margin: 0 0 4px; display: flex; align-items: center; gap: 6px; }
+.card-meta svg { width: 14px; height: 14px; color: var(--ink-mute); flex-shrink: 0; }
+.card-meta strong { color: var(--ink); font-weight: 700; }
+
+.empty-state { text-align: center; color: var(--ink-soft); padding: 60px 20px; font-size: 15px; }
+.empty-state svg { width: 40px; height: 40px; color: var(--berry); margin: 0 auto 14px; }
+
+/* ---------- Form ---------- */
+.form-card {
+  background: var(--surface); border: 2px solid var(--border); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md); padding: 32px; max-width: 660px;
+}
+.segmented { display: flex; gap: 4px; margin-bottom: 24px; background: var(--surface-sunken); padding: 4px; border-radius: var(--radius); width: fit-content; }
+.seg-btn {
+  background: transparent; border: none; padding: 10px 18px; border-radius: var(--radius-sm);
+  font-weight: 800; font-size: 14px; cursor: pointer; color: var(--ink-soft);
+  display: inline-flex; align-items: center; gap: 7px; transition: all 0.15s ease;
+}
+.seg-btn svg { width: 16px; height: 16px; }
+.seg-btn.active { background: var(--surface); color: var(--coral-dark); box-shadow: var(--shadow-sm); }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+label { display: block; font-size: 13.5px; font-weight: 800; margin-bottom: 16px; color: var(--ink); }
+.opt { font-weight: 400; color: var(--ink-mute); }
+input[type="text"], input[type="date"], input[type="tel"], input[type="file"], select, textarea {
+  display: block; width: 100%; margin-top: 7px;
+  padding: 11px 13px; border: 2px solid var(--border); border-radius: var(--radius-sm);
+  font-size: 14.5px; font-family: var(--font-body); background: var(--surface); color: var(--ink);
+  transition: border-color 0.15s ease;
+}
+textarea { resize: vertical; }
+input[type="file"] { padding: 8px 10px; font-size: 13.5px; }
+
+/* ---------- Modal ---------- */
+.modal-backdrop {
+  position: fixed; inset: 0; background: rgba(29,26,46,0.55); backdrop-filter: blur(2px);
+  display: flex; align-items: center; justify-content: center; z-index: 50; padding: 20px;
+}
+.modal {
+  background: var(--surface); border-radius: var(--radius-lg); position: relative;
+  max-width: 460px; width: 100%; padding: 26px; max-height: 86vh; overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+}
+.modal .card-photo { height: 210px; border-radius: var(--radius); margin-bottom: 6px; }
+.modal .card-media { margin: -4px -4px 14px; }
+.modal h3 { font-family: var(--font-display); font-size: 23px; font-weight: 800; margin: 12px 0 10px; }
+.modal-actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+.modal-close-x {
+  position: absolute; top: 16px; right: 16px; background: var(--surface-sunken); border: none;
+  width: 30px; height: 30px; border-radius: 50%; font-size: 16px; cursor: pointer; color: var(--ink-soft);
+  display: flex; align-items: center; justify-content: center;
+}
+.modal-close-x:hover { background: var(--border); }
+
+/* ---------- Footer ---------- */
+.site-footer { border-top: 2px solid var(--border); padding: 24px 0; }
+.site-footer p { font-size: 13px; color: var(--ink-mute); margin: 0; }
+
+@media (max-width: 760px) {
+  .hero-inner { padding: 44px 0 36px; }
+  .hero-stats { grid-template-columns: repeat(3, 1fr); }
+  .grid-2 { grid-template-columns: 1fr; }
+  .main-nav { gap: 0; }
+  .nav-link { padding: 8px 12px; font-size: 12.5px; }
+  .form-card { padding: 22px; }
+}
+
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <div class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="7" cy="7.5" r="2.1"/><circle cx="12.5" cy="5.2" r="2.1"/><circle cx="17.7" cy="7.5" r="2.1"/>
+          <path d="M12.5 11.2c-3.4 0-6.6 2.4-6.6 5.6 0 1.9 1.6 2.9 3.4 2.4.9-.2 1.9-.6 3.2-.6s2.3.4 3.2.6c1.8.5 3.4-.5 3.4-2.4 0-3.2-3.2-5.6-6.6-5.6z"/>
+        </svg>
+      </span>
+      <span class="brand-name">PetConnect</span>
+    </div>
+    <nav class="main-nav">
+      <button class="nav-link active" data-view="browse">Browse board</button>
+      <button class="nav-link" data-view="report">Report a pet</button>
+      <button class="nav-link" data-view="mine">My reports</button>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="wrap hero-inner">
+    <div class="hero-copy">
+      <p class="eyebrow">Community lost &amp; found network</p>
+      <h1>Every pet on this board<br>has someone waiting.</h1>
+      <p class="hero-sub">Report a sighting, search the board, and track a case until it's closed — reunited.</p>
+      <div class="hero-actions">
+        <button class="primary-btn" id="heroReportBtn">Report a pet</button>
+        <button class="ghost-btn" id="heroBrowseBtn">Browse the board
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="hero-stats" id="heroStats"></div>
+  </div>
+</section>
+
+<main class="wrap">
+
+  <!-- BROWSE VIEW -->
+  <section id="view-browse" class="view">
+    <div class="filter-bar">
+      <div class="search-field">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input type="text" id="searchInput" placeholder="Search by name, breed, colour, or location…">
+      </div>
+      <select id="filterStatus">
+        <option value="all">All statuses</option>
+        <option value="lost">Lost</option>
+        <option value="found">Found</option>
+        <option value="reunited">Reunited</option>
+      </select>
+      <select id="filterSpecies">
+        <option value="all">All species</option>
+        <option value="Dog">Dog</option>
+        <option value="Cat">Cat</option>
+        <option value="Bird">Bird</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div id="board" class="board"></div>
+    <div id="emptyState" class="empty-state" hidden>
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.6"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <p>No cases match yet. Be the first to <button class="link-btn" id="emptyReportBtn">report one</button>.</p>
+    </div>
+  </section>
+
+  <!-- REPORT VIEW -->
+  <section id="view-report" class="view" hidden>
+    <div class="form-card">
+      <h2>Report a pet</h2>
+      <p class="form-sub">Accurate details get a pet home faster. Fill in what you know.</p>
+      <form id="reportForm">
+        <div class="segmented" id="statusPicker">
+          <button type="button" class="seg-btn active" data-status="lost">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0112 6.5 5.5 5.5 0 0121.5 12c-2.5 4.5-9.5 9-9.5 9z" stroke="currentColor" stroke-width="1.8"/></svg>
+            I lost a pet
+          </button>
+          <button type="button" class="seg-btn" data-status="found">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 12.5l2.3 2.3L15.5 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            I found a pet
+          </button>
+        </div>
+
+        <div class="grid-2">
+          <label>Pet name <span class="opt">(if known)</span>
+            <input type="text" name="name" placeholder="e.g. Bruno">
+          </label>
+          <label>Species
+            <select name="species" required>
+              <option value="Dog">Dog</option>
+              <option value="Cat">Cat</option>
+              <option value="Bird">Bird</option>
+              <option value="Other">Other</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="grid-2">
+          <label>Breed <span class="opt">(if known)</span>
+            <input type="text" name="breed" placeholder="e.g. Indie / Labrador">
+          </label>
+          <label>Colour / markings
+            <input type="text" name="colour" placeholder="e.g. brown with white patch" required>
+          </label>
+        </div>
+
+        <div class="grid-2">
+          <label>Last seen / found location
+            <input type="text" name="location" placeholder="e.g. Pollachi bus stand" required>
+          </label>
+          <label>Date
+            <input type="date" name="date" required>
+          </label>
+        </div>
+
+        <label>Description
+          <textarea name="description" rows="3" placeholder="Collar, behaviour, health, anything distinctive…"></textarea>
+        </label>
+
+        <label>Photo <span class="opt">(optional)</span>
+          <input type="file" name="photo" accept="image/*" id="photoInput">
+        </label>
+
+        <div class="grid-2">
+          <label>Your name
+            <input type="text" name="reporter" placeholder="e.g. Loki" required>
+          </label>
+          <label>Contact number
+            <input type="tel" name="contact" placeholder="e.g. 98765 43210" required>
+          </label>
+        </div>
+
+        <button type="submit" class="primary-btn">Submit report</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- MY REPORTS VIEW -->
+  <section id="view-mine" class="view" hidden>
+    <h2>My reports</h2>
+    <p class="form-sub">Cases you've submitted from this device. Update status as things progress.</p>
+    <div id="mineBoard" class="board"></div>
+    <p id="mineEmpty" class="empty-state" hidden>You haven't reported anything yet.</p>
+  </section>
+
+</main>
+
+<div class="modal-backdrop" id="modalBackdrop" hidden>
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>PetConnect — built for communities who look out for their strays. Data stays on this device.</p>
+  </div>
+</footer>
+
+<script>
+// PetConnect — client-side prototype
+// Persistence: localStorage (swap STORAGE_KEY layer for a real API/database in production)
+
+const STORAGE_KEY = "petconnect_reports_v1";
+const DEVICE_KEY = "petconnect_device_id";
+
+function getDeviceId() {
+  let id = localStorage.getItem(DEVICE_KEY);
+  if (!id) {
+    id = "dev_" + Math.random().toString(36).slice(2, 10);
+    localStorage.setItem(DEVICE_KEY, id);
+  }
+  return id;
+}
+
+function loadReports() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : seedData();
+  } catch {
+    return seedData();
+  }
+}
+
+function saveReports(reports) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(reports));
+}
+
+function seedData() {
+  const seed = [
+    {
+      id: "seed_1",
+      status: "lost",
+      name: "Bruno",
+      species: "Dog",
+      breed: "Indie",
+      colour: "Brown with white chest patch",
+      location: "Pollachi Bus Stand",
+      date: new Date(Date.now() - 86400000 * 2).toISOString().slice(0, 10),
+      description: "Wearing a red collar, friendly, responds to his name.",
+      photo: "",
+      reporter: "Anita",
+      contact: "9876543210",
+      deviceId: "seed",
+      createdAt: Date.now() - 86400000 * 2,
+    },
+    {
+      id: "seed_2",
+      status: "found",
+      name: "",
+      species: "Cat",
+      breed: "",
+      colour: "Grey tabby",
+      location: "Coimbatore, Race Course area",
+      date: new Date(Date.now() - 86400000).toISOString().slice(0, 10),
+      description: "Found near a tea stall, seems well-fed, no collar.",
+      photo: "",
+      reporter: "Karthik",
+      contact: "9123456780",
+      deviceId: "seed",
+      createdAt: Date.now() - 86400000,
+    },
+  ];
+  saveReports(seed);
+  return seed;
+}
+
+let reports = loadReports();
+let currentView = "browse";
+
+const $ = (sel, ctx = document) => ctx.querySelector(sel);
+const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+
+// ---------- Navigation ----------
+$$(".nav-link").forEach((btn) => {
+  btn.addEventListener("click", () => switchView(btn.dataset.view));
+});
+$("#emptyReportBtn")?.addEventListener("click", () => switchView("report"));
+$("#heroReportBtn")?.addEventListener("click", () => switchView("report"));
+$("#heroBrowseBtn")?.addEventListener("click", () => switchView("browse"));
+
+function switchView(view) {
+  currentView = view;
+  $$(".view").forEach((v) => (v.hidden = true));
+  $(`#view-${view}`).hidden = false;
+  $$(".nav-link").forEach((b) => b.classList.toggle("active", b.dataset.view === view));
+  if (view === "browse") renderBoard();
+  if (view === "mine") renderMine();
+}
+
+// ---------- Hero stats ----------
+function renderStats() {
+  const lost = reports.filter((r) => r.status === "lost").length;
+  const found = reports.filter((r) => r.status === "found").length;
+  const reunited = reports.filter((r) => r.status === "reunited").length;
+  $("#heroStats").innerHTML = `
+    <div class="stat"><span class="stat-num">${lost}</span><span class="stat-label">Lost</span></div>
+    <div class="stat"><span class="stat-num">${found}</span><span class="stat-label">Found</span></div>
+    <div class="stat"><span class="stat-num">${reunited}</span><span class="stat-label">Reunited</span></div>
+  `;
+}
+
+// ---------- Board rendering ----------
+function matchesFilters(r) {
+  const q = $("#searchInput").value.trim().toLowerCase();
+  const status = $("#filterStatus").value;
+  const species = $("#filterSpecies").value;
+  if (status !== "all" && r.status !== status) return false;
+  if (species !== "all" && r.species !== species) return false;
+  if (q) {
+    const hay = `${r.name} ${r.breed} ${r.colour} ${r.location} ${r.description}`.toLowerCase();
+    if (!hay.includes(q)) return false;
+  }
+  return true;
+}
+
+const ICON_PIN = `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0112 3.5a6.5 6.5 0 016.5 6.5c0 5.4-6.5 11-6.5 11z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="10" r="2.3" stroke="currentColor" stroke-width="1.8"/></svg>`;
+const ICON_CALENDAR = `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3.5" y="5" width="17" height="15" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 9.5h17M8 3v3.5M16 3v3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`;
+
+const SPECIES_CLASS = { Dog: "species-dog", Cat: "species-cat", Bird: "species-bird", Other: "species-other" };
+const SPECIES_EMOJI = { Dog: "🐶", Cat: "🐱", Bird: "🐦", Other: "🐾" };
+
+function petCardHTML(r) {
+  const title = r.name ? r.name : `${r.species} (unnamed)`;
+  const speciesClass = SPECIES_CLASS[r.species] || "species-other";
+  const photo = r.photo
+    ? `<img class="card-photo" src="${r.photo}" alt="${title}">`
+    : `<div class="card-photo placeholder ${speciesClass}">${r.species}</div>`;
+  return `
+    <div class="pet-card" data-id="${r.id}">
+      <div class="card-media">
+        ${photo}
+        <span class="tag ${r.status}">${r.status}</span>
+        <span class="species-chip ${speciesClass}" title="${escapeHTML(r.species)}">${SPECIES_EMOJI[r.species] || "🐾"}</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">${escapeHTML(title)}</h3>
+        <p class="card-meta"><strong>${escapeHTML(r.colour)}</strong></p>
+        <p class="card-meta">${ICON_PIN}${escapeHTML(r.location)}</p>
+        <p class="card-meta">${ICON_CALENDAR}${r.date}</p>
+      </div>
+    </div>
+  `;
+}
+
+function escapeHTML(str = "") {
+  const div = document.createElement("div");
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function renderBoard() {
+  const list = reports
+    .filter(matchesFilters)
+    .sort((a, b) => b.createdAt - a.createdAt);
+  $("#board").innerHTML = list.map(petCardHTML).join("");
+  $("#emptyState").hidden = list.length !== 0;
+  $$(".pet-card", $("#board")).forEach((card) => {
+    card.addEventListener("click", () => openModal(card.dataset.id));
+  });
+  renderStats();
+}
+
+function renderMine() {
+  const deviceId = getDeviceId();
+  const mine = reports.filter((r) => r.deviceId === deviceId).sort((a, b) => b.createdAt - a.createdAt);
+  $("#mineBoard").innerHTML = mine.map(petCardHTML).join("");
+  $("#mineEmpty").hidden = mine.length !== 0;
+  $$(".pet-card", $("#mineBoard")).forEach((card) => {
+    card.addEventListener("click", () => openModal(card.dataset.id));
+  });
+}
+
+["#searchInput", "#filterStatus", "#filterSpecies"].forEach((sel) => {
+  $(sel).addEventListener("input", renderBoard);
+});
+
+// ---------- Modal / detail + tracking ----------
+function openModal(id) {
+  const r = reports.find((x) => x.id === id);
+  if (!r) return;
+  const title = r.name ? r.name : `${r.species} (unnamed)`;
+  const speciesClass = SPECIES_CLASS[r.species] || "species-other";
+  const photo = r.photo
+    ? `<img class="card-photo" src="${r.photo}" alt="${title}">`
+    : `<div class="card-photo placeholder ${speciesClass}">${r.species}</div>`;
+
+  const nextActions = [];
+  if (r.status !== "reunited") {
+    nextActions.push(`<button class="secondary-btn" data-action="reunited">Mark as reunited</button>`);
+  }
+  if (r.status === "lost") {
+    nextActions.push(`<button class="secondary-btn" data-action="found">Mark as found</button>`);
+  }
+
+  $("#modalContent").innerHTML = `
+    <button class="modal-close-x" id="modalCloseX">✕</button>
+    <div class="card-media">
+      ${photo}
+      <span class="tag ${r.status}">${r.status}</span>
+    </div>
+    <h3>${escapeHTML(title)}</h3>
+    <p class="card-meta"><strong>Species:</strong> ${escapeHTML(r.species)} ${r.breed ? "· " + escapeHTML(r.breed) : ""}</p>
+    <p class="card-meta"><strong>Colour / markings:</strong> ${escapeHTML(r.colour)}</p>
+    <p class="card-meta"><strong>Location:</strong> ${escapeHTML(r.location)}</p>
+    <p class="card-meta"><strong>Date:</strong> ${r.date}</p>
+    ${r.description ? `<p class="card-meta">${escapeHTML(r.description)}</p>` : ""}
+    <p class="card-meta"><strong>Reported by:</strong> ${escapeHTML(r.reporter)} · ${escapeHTML(r.contact)}</p>
+    <div class="modal-actions">${nextActions.join("")}</div>
+  `;
+  $("#modalBackdrop").hidden = false;
+  $("#modalCloseX").addEventListener("click", closeModal);
+  $$("[data-action]", $("#modalContent")).forEach((btn) => {
+    btn.addEventListener("click", () => {
+      updateStatus(id, btn.dataset.action);
+      closeModal();
+    });
+  });
+}
+
+function closeModal() {
+  $("#modalBackdrop").hidden = true;
+}
+$("#modalBackdrop").addEventListener("click", (e) => {
+  if (e.target === $("#modalBackdrop")) closeModal();
+});
+
+function updateStatus(id, status) {
+  reports = reports.map((r) => (r.id === id ? { ...r, status } : r));
+  saveReports(reports);
+  renderBoard();
+  renderMine();
+}
+
+// ---------- Report form ----------
+$$(".seg-btn").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    $$(".seg-btn").forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+  });
+});
+
+$("#reportForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const fd = new FormData(form);
+  const status = $(".seg-btn.active").dataset.status;
+  const photoFile = fd.get("photo");
+  let photoData = "";
+  if (photoFile && photoFile.size > 0) {
+    photoData = await fileToDataURL(photoFile);
+  }
+
+  const newReport = {
+    id: "r_" + Date.now() + "_" + Math.random().toString(36).slice(2, 6),
+    status,
+    name: fd.get("name")?.trim() || "",
+    species: fd.get("species"),
+    breed: fd.get("breed")?.trim() || "",
+    colour: fd.get("colour")?.trim() || "",
+    location: fd.get("location")?.trim() || "",
+    date: fd.get("date"),
+    description: fd.get("description")?.trim() || "",
+    photo: photoData,
+    reporter: fd.get("reporter")?.trim() || "",
+    contact: fd.get("contact")?.trim() || "",
+    deviceId: getDeviceId(),
+    createdAt: Date.now(),
+  };
+
+  reports.push(newReport);
+  saveReports(reports);
+  form.reset();
+  switchView("browse");
+});
+
+function fileToDataURL(file) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.readAsDataURL(file);
+  });
+}
+
+// ---------- Init ----------
+renderBoard();
+renderStats();
+
+</script>
+</body>
+</html>
