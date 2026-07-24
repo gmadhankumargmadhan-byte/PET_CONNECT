@@ -1,0 +1,22 @@
+{
+  "name": "petreunion",
+  "version": "1.0.0",
+  "description": "Lost & Found Pet Reunion Platform - full stack app",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node server/index.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.110.8",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^17.4.2",
+    "express": "^4.19.2",
+    "jimp": "^0.22.12",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "qrcode": "^1.5.3",
+    "uuid": "^9.0.1"
+  }
+}
